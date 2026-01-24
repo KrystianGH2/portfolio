@@ -9,10 +9,11 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "nodemon backend/src/app.js",
-     "seed": "node backend/src/seed.js"
+    "seed": "node backend/src/seed.js"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
+    "express": "^5.2.1",
     "mongodb": "^7.0.0",
     "mongoose": "^9.1.5",
     "nodemon": "^3.1.11",
