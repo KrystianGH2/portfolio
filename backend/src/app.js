@@ -20,5 +20,24 @@ app.get("/api/projects", async (req, res) => {
   }
 });
 
+app.post("/api/projects", async (req, res) => {
+  try {
+    await connectDB();
+    const created = await Project.create(req.body);
+    res.status(201).json(created.toObject());
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Server Internal Error", details: String(error) });
+  }
+});
+
+app.use((req, res) => {
+  console.log(req);
+  res.status(404).json({
+    message: "Endpoint not found",
+  });
+});
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`));
