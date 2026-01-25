@@ -1,12 +1,5 @@
 import { useState, useEffect } from "react";
-
-interface ProjectTypes {
-  title: string;
-  description: string;
-  tech: string[];
-  repoUrl: string;
-  liveUrl: string;
-}
+import type { ProjectTypes } from "../types/types";
 
 function useProjects() {
   const [projects, setProjects] = useState<ProjectTypes[]>([]);
