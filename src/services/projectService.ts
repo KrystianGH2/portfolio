@@ -1,20 +1,17 @@
 import type { ProjectTypes } from "../types/types";
 
-interface PayloadType {
-  payload: ProjectTypes;
-}
-export async function createProjects(payload: PayloadType) {
+export async function createProjects(payload: ProjectTypes) {
   const options = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json", 
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(payload),
   };
   try {
     const res = await fetch("/api/projects", options);
     if (!res.ok) {
-      throw new Error("Something went wrong");
+      throw new Error("Failed creating data");
     }
 
     return res;
