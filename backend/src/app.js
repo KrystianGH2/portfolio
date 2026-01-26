@@ -1,9 +1,17 @@
 import express from "express";
 import { connectDB } from "./db.js";
 import { Project } from "./models/project.js";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: [process.env.BASE_URL, "http://localhost:5173"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  }),
+);
 
 app.get("/api/projects", async (req, res) => {
   try {

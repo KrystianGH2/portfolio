@@ -1,6 +1,7 @@
 import type { ProjectTypes } from "../types/types";
 
 export async function createProjects(payload: ProjectTypes) {
+  const baseUrl = import.meta.env.BASE_URL;
   const options = {
     method: "POST",
     headers: {
@@ -9,7 +10,7 @@ export async function createProjects(payload: ProjectTypes) {
     body: JSON.stringify(payload),
   };
   try {
-    const res = await fetch("/api/projects", options);
+    const res = await fetch(`${baseUrl}/api/projects`, options);
     if (!res.ok) {
       throw new Error("Failed creating data");
     }
@@ -21,3 +22,4 @@ export async function createProjects(payload: ProjectTypes) {
     }
   }
 }
+  
