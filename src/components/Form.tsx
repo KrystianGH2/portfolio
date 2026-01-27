@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import useCreateProject from "@/hooks/useCreateProject";
 
 import { Input } from "@/components/ui/input";
