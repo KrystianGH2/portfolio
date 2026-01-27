@@ -1,7 +1,8 @@
 import type { ProjectTypes } from "../types/types";
 
 export async function createProjects(payload: ProjectTypes) {
-  const baseUrl = import.meta.env.BASE_URL;
+  const baseUrl =
+    import.meta.env.VITE_API_BASE_URL || "https://portfolio-j42o.onrender.com";
   const options = {
     method: "POST",
     headers: {
@@ -22,4 +23,3 @@ export async function createProjects(payload: ProjectTypes) {
     }
   }
 }
-  
