@@ -6,6 +6,7 @@ function useCreateProject() {
   const [formData, setFormData] = useState<ProjectTypes>({
     title: "",
     description: "",
+    imageUrl: "",
     tech: [],
     repoUrl: "",
     liveUrl: "",
@@ -14,10 +15,13 @@ function useCreateProject() {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target; // Gets the name and value from the input element
 
+    // Split by comma and removes whitespaces
+    const techArr = value.split(",").map((item) => item.trim());
+
     // uses the prev state, spread its properties and update specific fields
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value, //uses bracket notation to update the correct name
+      [name]: name === "tech" ? techArr : value, //uses bracket notation to update the correct name
     }));
   };
 
