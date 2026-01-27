@@ -8,7 +8,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: [process.env.BASE_URL, "http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://portfolio-roan-xi-45.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
   }),
 );
