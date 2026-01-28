@@ -28,27 +28,23 @@ function useCreateProject() {
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const createPostReq = async () => {
-      try {
-        const result = projectSchema.safeParse(formData);
-        if (!result.success) {
-          return result.error;
-        }
+    const result = projectSchema.safeParse(formData);
+    if (!result.success) {
+      return result.error;
+    }
+    try {
+      const res = await createProjects(result.data);
 
-        const res = await createProjects(result.data);
-
-        if (!res) {
-          throw new Error("Failed creating data at ./useCreateProject");
-        }
-
-        return res;
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error(error);
-        }
+      if (!res) {
+        throw new Error("Failed creating data at ./useCreateProject");
       }
-    };
-    createPostReq();
+
+      return res;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error);
+      }
+    }
   };
 
   return { handleOnChange, setFormData, formData, handleOnSubmit };
