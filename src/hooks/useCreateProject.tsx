@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createProjects } from "../services/projectService";
-import type { ProjectTypes } from "../types/types";
+import type { ProjectTypes } from "@/validation/projectSchema";
+import { projectSchema } from "@/validation/projectSchema";
 
 function useCreateProject() {
   const [formData, setFormData] = useState<ProjectTypes>({
@@ -21,7 +22,7 @@ function useCreateProject() {
     // uses the prev state, spread its properties and update specific fields
     setFormData((prevState) => ({
       ...prevState,
-      [name]: name === "tech" ? techArr : value, //uses bracket notation to update the correct name
+      [name]: name === "tech" ? techArr : value.trim(), //uses bracket notation to update the correct name
     }));
   };
 
@@ -29,7 +30,13 @@ function useCreateProject() {
     e.preventDefault();
     const createPostReq = async () => {
       try {
-        const res = await createProjects(formData);
+        const result = projectSchema.safeParse(formData);
+        if (!result.success) {
+          return result.error;
+        }
+
+        const res = await createProjects(result.data);
+
         if (!res) {
           throw new Error("Failed creating data at ./useCreateProject");
         }
