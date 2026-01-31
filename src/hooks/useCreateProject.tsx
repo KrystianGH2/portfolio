@@ -4,6 +4,7 @@ import type { ProjectTypes } from "@/validation/projectSchema";
 import { projectSchema } from "@/validation/projectSchema";
 
 function useCreateProject() {
+  const [textArea, setTextArea] = useState("");
   const [formData, setFormData] = useState<ProjectTypes>({
     title: "",
     description: "",
@@ -13,6 +14,9 @@ function useCreateProject() {
     liveUrl: "",
   });
 
+  const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextArea(e.target.value);
+  };
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target; // Gets the name and value from the input element
 
@@ -28,17 +32,15 @@ function useCreateProject() {
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const result = projectSchema.safeParse(formData);
+    const result = projectSchema.safeParse({
+      ...formData,
+      description: textArea,
+    });
     if (!result.success) {
       return result.error;
     }
     try {
       const res = await createProjects(result.data);
-
-      if (!res) {
-        throw new Error("Failed creating data at ./useCreateProject");
-      }
-
       return res;
     } catch (error) {
       if (error instanceof Error) {
@@ -47,7 +49,14 @@ function useCreateProject() {
     }
   };
 
-  return { handleOnChange, setFormData, formData, handleOnSubmit };
+  return {
+    handleOnChange,
+    handleTextArea,
+    setFormData,
+    formData,
+    handleOnSubmit,
+    textArea,
+  };
 }
 
 export default useCreateProject;
