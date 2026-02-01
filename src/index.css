@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "https://unpkg.com/open-props";
 
 @custom-variant dark (&:is(.dark *));
 :root {
@@ -134,4 +135,9 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.float-header {
+  animation: var(--animation-float);
+  animation-duration: 1s;
 }
