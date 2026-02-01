@@ -1,8 +1,8 @@
 "use client";
 import useProjects from "./hooks/useProjects";
-import Form from "./components/Form";
 import type { ProjectTypes } from "./validation/projectSchema";
-import "./index.css"
+import "./index.css";
+import Header from "./components/Header";
 
 function App() {
   const { projects } = useProjects();
@@ -24,8 +24,8 @@ function App() {
   return (
     <>
       <div className="w-full m-auto max-w-7xl">
+        <Header />
         <section>{lists}</section>
-        <Form />
       </div>
     </>
   );
