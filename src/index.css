@@ -1,6 +1,7 @@
+@import "open-props/open-props.min.css";
+@import "open-props/animations.min.css";
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "https://unpkg.com/open-props";
 
 @custom-variant dark (&:is(.dark *));
 :root {
@@ -137,7 +138,21 @@ body {
   }
 }
 
-.float-header {
-  animation: var(--animation-float);
-  animation-duration: 1s;
+.float-header-right {
+  animation: float-test 4s infinite;
+  transform: rotate(5deg);
+}
+.float-header-middle {
+  animation: float-test 5s infinite;
+  transform: rotate(3deg);
+}
+.float-header-left {
+  animation: float-test 6s infinite;
+  transform: rotate(-5deg);
+}
+
+@keyframes float-test {
+  50% {
+    transform: translateY(-12px);
+  }
 }
