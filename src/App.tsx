@@ -3,6 +3,7 @@ import useProjects from "./hooks/useProjects";
 import type { ProjectTypes } from "./validation/projectSchema";
 import "./index.css";
 import Header from "./components/Header";
+import About from "./components/About";
 
 function App() {
   const { projects } = useProjects();
@@ -25,6 +26,7 @@ function App() {
     <>
       <div className="w-full m-auto max-w-7xl">
         <Header />
+        <About />
         <section>{lists}</section>
       </div>
     </>
