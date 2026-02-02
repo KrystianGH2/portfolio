@@ -16,7 +16,7 @@ function Header() {
     setAvailability((prev) => !prev);
   };
   return (
-    <div className="w-full m-auto max-w-full pt-2 mb-10 px-2 lg:px-0 ">
+    <div className="w-full m-auto max-w-6xl pt-2 mb-10 px-2 lg:px-0 ">
       <nav className="flex flex-row justify-between items-center">
         <h1 className=" text-4xl font-semibold">KC</h1>
         <section className="border sm:min-w-md">
@@ -25,8 +25,8 @@ function Header() {
           </ul>
         </section>
       </nav>
-      <header className="w-full flex flex-col justify-center lg:justify-evenly items-center md:flex-row">
-        <section className="flex lg:basis-1/2 flex-col">
+      <header className="w-full flex flex-col gap-5 min-h-svh justify-center lg:justify-evenly items-center md:flex-row">
+        <section className="flex justify-center border items-start lg:basis-1/2 flex-col">
           <div className="max-w-43">
             <span className=" border flex flex-row justify-between items-center gap-2 px-4 py-1 rounded-full text-xs font-medium tracking-wider">
               Available For Work{" "}
@@ -57,13 +57,13 @@ function Header() {
           </div>
         </section>
         <section className="relative flex border w-full max-w-md lg:max-w-lg lg:basis-1/2 justify-center">
-          <div className="absolute top-12 right-0 bg-black h-10 w-10 rounded float-header-right">
+          <div className="absolute top-2 right-0 bg-black h-12 w-12 rounded float-header-right">
             <span></span>
           </div>
-          <div className="bg-black h-60 w-70 m-15 rounded float-header-middle">
+          <div className="bg-black h-60 w-70 m-8 rounded float-header-middle">
             <span></span>
           </div>
-          <div className="  absolute bottom-12 left-0 bg-black h-10 w-10 rounded float-header-left">
+          <div className="  absolute bottom-0 left-0 bg-black h-12 w-12 rounded float-header-left">
             <span></span>
           </div>
         </section>
