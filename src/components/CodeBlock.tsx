@@ -15,6 +15,7 @@ function CodeBlock() {
     text-slate-200
     shadow-xl
     backdrop-blur-md
+    z-10
   "
     >
       <pre className="space-y-1">
