@@ -1,14 +1,13 @@
-import { Link } from "react-router-dom";
 import { navLinks } from "@/constants/constants";
 import { useState } from "react";
+import { HashLink } from "react-router-hash-link";
 function Header() {
   const [availability, setAvailability] = useState(true);
   const links = navLinks.map((item, index) => {
     return (
-      <Link key={index} to={{ hash: item.hash }}>
-        {" "}
-        <li>{item.name}</li>
-      </Link>
+      <HashLink key={index} smooth to={item.hash}>
+        {item.name}
+      </HashLink>
     );
   });
 
