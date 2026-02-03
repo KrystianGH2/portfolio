@@ -1,14 +1,13 @@
-import { Link } from "react-router-dom";
 import { navLinks } from "@/constants/constants";
 import { useState } from "react";
+import { HashLink } from "react-router-hash-link";
 function Header() {
   const [availability, setAvailability] = useState(true);
   const links = navLinks.map((item, index) => {
     return (
-      <Link key={index} to={{ hash: item.hash }}>
-        {" "}
-        <li>{item.name}</li>
-      </Link>
+      <HashLink key={index} smooth to={item.hash}>
+        {item.name}
+      </HashLink>
     );
   });
 
@@ -19,14 +18,14 @@ function Header() {
     <div className="w-full m-auto max-w-6xl pt-2 mb-10 px-2 lg:px-0 ">
       <nav className="flex flex-row justify-between items-center">
         <h1 className=" text-4xl font-semibold">KC</h1>
-        <section className="border sm:min-w-md">
+        <section className=" sm:min-w-md">
           <ul className="flex w-full justify-between text-[1rem] tracking-wide">
             {links}
           </ul>
         </section>
       </nav>
       <header className="w-full flex flex-col gap-5 min-h-svh justify-center lg:justify-evenly items-center md:flex-row">
-        <section className="flex justify-center border items-start lg:basis-1/2 flex-col">
+        <section className="flex justify-center  items-start lg:basis-1/2 flex-col">
           <div className="max-w-43">
             <span className=" border flex flex-row justify-between items-center gap-2 px-4 py-1 rounded-full text-xs font-medium tracking-wider">
               Available For Work{" "}
@@ -56,7 +55,7 @@ function Header() {
             </button>
           </div>
         </section>
-        <section className="relative flex border w-full max-w-md lg:max-w-lg lg:basis-1/2 justify-center">
+        <section className="relative flex  w-full max-w-md lg:max-w-lg lg:basis-1/2 justify-center">
           <div className="absolute top-2 right-0 bg-black h-12 w-12 rounded float-header-right">
             <span></span>
           </div>
