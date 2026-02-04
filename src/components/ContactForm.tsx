@@ -1,19 +1,29 @@
 "use client";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { Button } from "./ui/button";
 import useForm from "@/hooks/useForm";
 
 function ContactForm() {
-  const { formData, messageData, messageDataChange, handleChange } = useForm();
+  const {
+    formData,
+    messageData,
+    messageDataChange,
+    handleChange,
+    handleOnSubmit,
+  } = useForm();
   return (
     <div id="contact" className="m-auto  py-20 max-w-6xl">
-      <form className="flex flex-col border rounded-2xl p-8 justify-center items-center">
+      <form
+        onSubmit={handleOnSubmit}
+        className="flex flex-col border rounded-2xl p-8 justify-center items-center"
+      >
         <section className="w-full max-w-xl">
           <div className="flex flex-col gap-2 justify-baseline items-start">
             <label>Title</label>
             <Input
               onChange={handleChange}
-              name="title"
+              name="name"
               value={formData.name}
               type="text"
               placeholder="Your name"
@@ -23,7 +33,7 @@ function ContactForm() {
             <label>Email</label>
             <Input
               onChange={handleChange}
-              name="title"
+              name="email"
               value={formData.email}
               type="text"
               placeholder="your@email.com"
@@ -35,7 +45,7 @@ function ContactForm() {
             <label>Subject</label>
             <Input
               onChange={handleChange}
-              name="title"
+              name="subject"
               value={formData.subject}
               type="text"
               placeholder="Project inquiry"
@@ -45,12 +55,16 @@ function ContactForm() {
             <label>Message</label>
             <Textarea
               onChange={messageDataChange}
-              name="title"
+              name="message"
               value={messageData}
               placeholder="Tell me about your project..."
             />
           </div>{" "}
         </section>
+
+        <Button className="mt-10" type="submit">
+          Submit
+        </Button>
       </form>
     </div>
   );
