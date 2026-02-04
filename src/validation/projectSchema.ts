@@ -10,3 +10,12 @@ export const projectSchema = z.object({
 
 // Tuns this schema into a TS type
 export type ProjectTypes = z.infer<typeof projectSchema>;
+
+export const contactFormSchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  email: z.email().min(1, "Enter a valid email."),
+  subject: z.string().min(5, "Subject must be at least 5 characters"),
+  message: z.string().min(1, "Message must be at least 10 characters"),
+});
+
+export type ContactFormTypes = z.infer<typeof contactFormSchema>;
