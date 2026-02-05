@@ -4,6 +4,7 @@ import type { ProjectTypes } from "./validation/projectSchema";
 import "./index.css";
 import Header from "./components/Header";
 import About from "./components/About";
+import ContactForm from "./components/ContactForm";
 
 function App() {
   const { projects } = useProjects();
@@ -28,6 +29,7 @@ function App() {
         <Header />
         <About />
         <section>{lists}</section>
+        <ContactForm />
       </div>
     </>
   );
