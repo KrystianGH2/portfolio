@@ -11,7 +11,10 @@ function ContactForm() {
     messageDataChange,
     handleChange,
     handleOnSubmit,
+    errorMessage,
   } = useForm();
+
+  
   return (
     <div id="contact" className="m-auto  py-20 max-w-6xl">
       <form
@@ -29,6 +32,12 @@ function ContactForm() {
               placeholder="Your name"
             />
           </div>
+          {errorMessage && (
+            <span
+              className="
+          text-red-500 py-2 text-xs"
+            >Mocked Error message</span>
+          )}
           <div className="flex flex-col gap-2 justify-baseline items-start">
             <label>Email</label>
             <Input
