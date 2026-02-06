@@ -41,9 +41,9 @@ function useForm() {
       });
 
       if (!result.success) {
-        const fieldErrors = result.error.flatten().fieldErrors;
+        const fieldErrors = z.treeifyError(result.error);
         setErrorMessage(fieldErrors);
-        console.log("Error message", result.error.issues);
+        console.log("Error message", fieldErrors);
         return;
       }
 
