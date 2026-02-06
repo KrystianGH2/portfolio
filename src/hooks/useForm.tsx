@@ -41,8 +41,10 @@ function useForm() {
       });
 
       if (!result.success) {
-        setErrorMessage(result.error.issues);
+        const fieldErrors = result.error.flatten().fieldErrors;
+        setErrorMessage(fieldErrors);
         console.log("Error message", result.error.issues);
+        return;
       }
 
       console.log(result);
