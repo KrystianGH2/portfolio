@@ -6,9 +6,11 @@ import {
 } from "@/validation/projectSchema";
 import z from "zod";
 
+type TreeError = ReturnType<typeof z.treeifyError>;
+
 function useForm() {
   const [messageData, setMessageData] = useState("");
-  const [errorMessage, setErrorMessage] = useState({});
+  const [errorMessage, setErrorMessage] = useState<TreeError | null>(null);
   const [formData, setFormData] = useState<ContactFormTypes>({
     name: "",
     email: "",
@@ -19,40 +21,34 @@ function useForm() {
   const messageDataChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const data = e.target.value;
     setMessageData(data);
+    setErrorMessage(null);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setFormData((prev) => ({
       ...prev,
       message: messageData,
       [name]: value,
     }));
+    setErrorMessage(null);
   };
 
-  const handleOnSubmit = async (e: React.FormEvent) => {
+  const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      const result = contactFormSchema.safeParse({
-        ...formData,
-        message: messageData,
-      });
+    const result = contactFormSchema.safeParse({
+      ...formData,
+      message: messageData,
+    });
 
-      if (!result.success) {
-        const fieldErrors = z.treeifyError(result.error);
-        setErrorMessage(fieldErrors);
-        console.log("Error message", fieldErrors);
-        return;
-      }
-
-      console.log(result);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        console.log("Validation Fail", error.issues);
-      }
+    if (!result.success) {
+      const fieldErrors = z.treeifyError(result.error);
+      setErrorMessage(fieldErrors);
+      return;
     }
+
+    console.log("Valid submit:", result.data);
   };
   return {
     formData,
