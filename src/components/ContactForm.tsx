@@ -20,7 +20,7 @@ function ContactForm() {
   const messageErr = errorMessage?.properties?.message?.errors?.[0];
 
   return (
-    <div id="contact" className="m-auto  py-20 max-w-6xl">
+    <div id="contact" className="m-auto  py-15 max-w-6xl">
       <form
         onSubmit={handleOnSubmit}
         className="flex flex-col border rounded-2xl p-8 justify-center items-center"
