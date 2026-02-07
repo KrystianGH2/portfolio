@@ -74,7 +74,7 @@ function ContactForm() {
         </section>
 
         <Button className="mt-10" type="submit">
-          Submit
+          Send Message
         </Button>
       </form>
     </div>
