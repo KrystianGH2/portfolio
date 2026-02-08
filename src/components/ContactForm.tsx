@@ -12,6 +12,7 @@ function ContactForm() {
     handleChange,
     handleOnSubmit,
     errorMessage,
+    isSending,
   } = useForm();
 
   const nameErr = errorMessage?.properties?.name?.errors?.[0];
@@ -69,12 +70,12 @@ function ContactForm() {
               value={messageData}
               placeholder="Tell me about your project..."
             />
-          </div>{" "}
           {messageErr && <p className="text-red-500 text-xs">{messageErr}</p>}
+          </div>{" "}
         </section>
 
-        <Button className="mt-10" type="submit">
-          Send Message
+        <Button disabled={isSending} className="mt-10" type="submit">
+          {isSending ? "Sending..." : "Send Message"}
         </Button>
       </form>
     </div>
