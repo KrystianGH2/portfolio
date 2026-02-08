@@ -11,6 +11,9 @@ type TreeError = ReturnType<typeof z.treeifyError>;
 function useForm() {
   const [messageData, setMessageData] = useState("");
   const [errorMessage, setErrorMessage] = useState<TreeError | null>(null);
+  const [isSending, setIsSending] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+  const [sendError, setSendError] = useState<string | null>(null);
   const [formData, setFormData] = useState<ContactFormTypes>({
     name: "",
     email: "",
@@ -32,9 +35,10 @@ function useForm() {
       [name]: value,
     }));
     setErrorMessage(null);
+    setIsSent(false);
   };
 
-  const handleOnSubmit = (e: React.FormEvent) => {
+  const handleOnSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const result = contactFormSchema.safeParse({
@@ -49,6 +53,34 @@ function useForm() {
     }
 
     console.log("Valid submit:", result.data);
+
+    try {
+      setIsSending(true);
+
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(result.data),
+      };
+
+      const res = await fetch("https://formspree.io/f/xaqdyaod", options);
+      if (!res.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      setIsSent(true);
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setMessageData("");
+    } catch (error) {
+      setSendError(
+        error instanceof Error ? error.message : "Something Went wrong",
+      );
+    } finally {
+      setIsSending(false);
+    }
   };
   return {
     formData,
@@ -57,6 +89,7 @@ function useForm() {
     messageDataChange,
     handleChange,
     handleOnSubmit,
+    isSending,
   };
 }
 
