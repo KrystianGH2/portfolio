@@ -1,6 +1,7 @@
 import { navLinks } from "@/constants/constants";
 import { useState } from "react";
 import { HashLink } from "react-router-hash-link";
+import { Button } from "./ui/button";
 function Header() {
   const [availability, setAvailability] = useState(true);
   const links = navLinks.map((item, index) => {
@@ -47,12 +48,16 @@ function Header() {
           </p>
 
           <div className="flex gap-8 mt-5">
-            <button className="px-4 py-1 border rounded-full">
-              View My Work
-            </button>
-            <button className="px-4 py-1 border rounded-full">
-              Get In Touch
-            </button>
+            <HashLink smooth to={"#projects"}>
+              <Button className="px-4 py-1 border rounded-full hover:cursor-pointer">
+                View My Work
+              </Button>
+            </HashLink>
+            <HashLink smooth to={"#contact"}>
+              <Button className="px-4 py-1 border rounded-full hover:cursor-pointer">
+                Get In Touch
+              </Button>
+            </HashLink>
           </div>
         </section>
         <section className="relative flex  w-full max-w-md lg:max-w-lg lg:basis-1/2 justify-center">
