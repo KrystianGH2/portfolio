@@ -12,6 +12,7 @@
     "seed": "node backend/src/seed.js"
   },
   "dependencies": {
+    "@formspree/react": "^3.0.0",
     "@radix-ui/react-label": "^2.1.8",
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
