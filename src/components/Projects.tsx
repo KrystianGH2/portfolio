@@ -26,7 +26,7 @@ function Projects() {
                 key={index}
               >
                 <img
-                  className="w-full max-w-60"
+                  className="w-full object-cover h-50"
                   src={item?.imageUrl}
                   alt={`${item.title} image`}
                 />
