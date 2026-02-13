@@ -13,7 +13,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<App />} />
         <Route path="/admin/dashboard" element={<Dashboard />}>
           <Route index element={<Form />} />
-          <Route path=":id" element={<div />} />
+          <Route path=":id" element={<Form />} />
         </Route>
       </Routes>
     </BrowserRouter>
