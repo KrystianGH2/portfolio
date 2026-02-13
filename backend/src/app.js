@@ -87,14 +87,13 @@ app.put("/api/projects/:id", async (req, res) => {
   }
 });
 
-
-app.delete("api/projects/:id", async (req, res) => {
+app.delete("/api/projects/:id", async (req, res) => {
   try {
     await connectDB();
 
     const { id } = req.params;
 
-    const deleteProject = Project.findByIdAndDelete(id);
+    const deleteProject = await Project.findByIdAndDelete(id);
 
     if (!deleteProject) {
       return res.status(404).json({ message: "Project not found" });
