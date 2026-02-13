@@ -98,6 +98,8 @@ function useForm() {
     handleChange,
     handleOnSubmit,
     isSending,
+    isSent,
+    sendError,
   };
 }
 
