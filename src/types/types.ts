@@ -1,4 +1,4 @@
-export interface ProjectTypes {
+export interface Project {
   _id: string;
   title: string;
   description: string;
@@ -9,9 +9,3 @@ export interface ProjectTypes {
   createdAt?: string;
   updatedAt?: string;
 }
-
-export type ProjectInput = ProjectTypes & {
-  _id: string;
-  createdAt?: string;
-  updatedAt?: string;
-};
