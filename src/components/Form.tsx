@@ -4,14 +4,20 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useParams } from "react-router-dom";
 
 function Form() {
+  const { id } = useParams();
+  const isEdit = Boolean(id);
   const { handleOnChange, handleOnSubmit, formData, handleTextArea, textArea } =
     useCreateProject();
   return (
     <Card className="w-full m-auto sm:max-w-md p-8">
-      <h1 className="">Create project</h1>
-      <form className="flex flex-col gap-3" onSubmit={handleOnSubmit}>
+      <h1 className="">{isEdit ? "Update Project" : "Create Project"}</h1>
+      <form
+        className="flex flex-col gap-3"
+        onSubmit={(e) => handleOnSubmit(e, id)}
+      >
         <div className="flex flex-col gap-2 justify-baseline items-start">
           <label> Title</label>
           <Input
@@ -30,7 +36,7 @@ function Form() {
             value={textArea}
           />
           <span className="text-gray-400 font-medium text-sm absolute left-2 bottom-2">
-            {formData.description.length} / 100 characters
+            {textArea.length} / 100 characters
           </span>
         </div>
         <div className="flex flex-col gap-2 justify-baseline items-start">
@@ -74,7 +80,7 @@ function Form() {
           className="hover:text-accent hover:cursor-pointer mt-5"
           type="submit"
         >
-          Create
+          {isEdit ? "Update" : "Create"}
         </Button>
       </form>
     </Card>
