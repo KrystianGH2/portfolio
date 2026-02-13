@@ -36,13 +36,13 @@ export async function updateProject(payload: ProjectTypes, id: string) {
   try {
     const res = await fetch(`${baseUrl}/api/projects/${id}`, options);
     if (!res.ok) {
-      throw new Error("Failed creating data");
+      throw new Error("Failed updating data");
     }
 
     return res;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error("Failed creating project.", error);
+      throw new Error("Failed updating project.", error);
     }
   }
 }
