@@ -9,3 +9,9 @@ export interface ProjectTypes {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export type ProjectInput = ProjectTypes & {
+  _id: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
