@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createProjects } from "../services/projectService";
 import type { ProjectTypes } from "@/validation/projectSchema";
 import { projectSchema } from "@/validation/projectSchema";
+import { updateProject } from "../services/projectService";
 
 function useCreateProject() {
   const [textArea, setTextArea] = useState("");
@@ -26,11 +27,14 @@ function useCreateProject() {
     // uses the prev state, spread its properties and update specific fields
     setFormData((prevState) => ({
       ...prevState,
-      [name]: name === "tech" ? techArr : value.trim(), //uses bracket notation to update the correct name
+      [name]: name === "tech" ? techArr : value, //uses bracket notation to update the correct name
     }));
   };
 
-  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+    id?: string,
+  ) => {
     e.preventDefault();
     const result = projectSchema.safeParse({
       ...formData,
@@ -39,9 +43,13 @@ function useCreateProject() {
     if (!result.success) {
       return result.error;
     }
+
+    // Decides create vs update - when id exists
     try {
-      const res = await createProjects(result.data);
-      return res;
+      if (id) {
+        return await updateProject(result.data, id);
+      }
+      return await createProjects(result.data);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error);
