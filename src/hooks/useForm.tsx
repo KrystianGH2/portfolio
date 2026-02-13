@@ -6,7 +6,15 @@ import {
 } from "@/validation/projectSchema";
 import z from "zod";
 
-type TreeError = ReturnType<typeof z.treeifyError>;
+type TreeError = {
+  errors: string[];
+  properties?: {
+    name?: { errors: string[] };
+    email?: { errors: string[] };
+    subject?: { errors: string[] };
+    message?: { errors: string[] };
+  };
+};
 
 function useForm() {
   const [messageData, setMessageData] = useState("");
@@ -47,7 +55,7 @@ function useForm() {
     });
 
     if (!result.success) {
-      const fieldErrors = z.treeifyError(result.error);
+      const fieldErrors = z.treeifyError(result.error) as TreeError;
       setErrorMessage(fieldErrors);
       return;
     }
