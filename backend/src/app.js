@@ -63,6 +63,31 @@ app.get("/api/projects/:id", async (req, res) => {
   }
 });
 
+app.put("/api/projects/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await connectDB();
+
+    const updatedProject = await Project.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedProject) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    res.json(updatedProject);
+  } catch (err) {
+    res.status(500).json({
+      message: "Server Error",
+      details: String(err),
+    });
+  }
+});
+
+
 app.delete("api/projects/:id", async (req, res) => {
   try {
     await connectDB();
