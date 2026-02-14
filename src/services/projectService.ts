@@ -1,7 +1,8 @@
 import type { ProjectTypes } from "@/validation/projectSchema";
+const baseUrl =
+  import.meta.env.VITE_API_BASE_URL || "https://portfolio-j42o.onrender.com";
+
 export async function createProjects(payload: ProjectTypes) {
-  const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "https://portfolio-j42o.onrender.com";
   const options = {
     method: "POST",
     headers: {
@@ -24,8 +25,6 @@ export async function createProjects(payload: ProjectTypes) {
 }
 
 export async function updateProject(payload: ProjectTypes, id: string) {
-  const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "https://portfolio-j42o.onrender.com";
   const options = {
     method: "PUT",
     headers: {
@@ -43,6 +42,27 @@ export async function updateProject(payload: ProjectTypes, id: string) {
   } catch (error) {
     if (error instanceof Error) {
       throw new Error("Failed updating project.", error);
+    }
+  }
+}
+
+export async function getProjectById(id: string) {
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await fetch(`${baseUrl}/api/projects/${id}`, options);
+    if (!res.ok) {
+      throw new Error("Failed fetching data");
+    }
+
+    return res;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error("Failed fetching project.", error);
     }
   }
 }
