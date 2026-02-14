@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createProjects } from "../services/projectService";
 import type { ProjectTypes } from "@/validation/projectSchema";
 import { projectSchema } from "@/validation/projectSchema";
 import { updateProject } from "../services/projectService";
+import { getProjectById } from "../services/projectService";
+import { useParams } from "react-router-dom";
 
 function useCreateProject() {
+  const { id } = useParams();
   const [textArea, setTextArea] = useState("");
   const [formData, setFormData] = useState<ProjectTypes>({
     title: "",
@@ -30,6 +33,43 @@ function useCreateProject() {
       [name]: name === "tech" ? techArr : value, //uses bracket notation to update the correct name
     }));
   };
+
+  useEffect(() => {
+    if (!id) {
+      setFormData({
+        title: "",
+        description: "",
+        imageUrl: "",
+        tech: [],
+        repoUrl: "",
+        liveUrl: "",
+      });
+      setTextArea("");
+    }
+
+    if (!id) return;
+    const load = async () => {
+      try {
+        const res = await getProjectById(id);
+        const project = await res?.json();
+
+        setFormData({
+          title: project.title ?? "",
+          description: project.description ?? "",
+          imageUrl: project.imageUrl ?? "",
+          tech: project.tech ?? [],
+          repoUrl: project.repoUrl ?? "",
+          liveUrl: project.liveUrl ?? "",
+        });
+
+        setTextArea(project.description ?? "");
+      } catch (error) {
+        console.log(error instanceof Error ? error : null);
+      }
+    };
+
+    load();
+  }, [id]);
 
   const handleOnSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
