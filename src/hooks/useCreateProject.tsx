@@ -5,10 +5,15 @@ import { projectSchema } from "@/validation/projectSchema";
 import { updateProject } from "../services/projectService";
 import { getProjectById } from "../services/projectService";
 import { useParams } from "react-router-dom";
+import z from "zod";
+import type { ProjectErrors } from "@/types/types";
+
+
 
 function useCreateProject() {
   const { id } = useParams();
   const [textArea, setTextArea] = useState("");
+  const [errorMessage, setErrorMessage] = useState<ProjectErrors | null>(null);
   const [formData, setFormData] = useState<ProjectTypes>({
     title: "",
     description: "",
@@ -21,6 +26,7 @@ function useCreateProject() {
   const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextArea(e.target.value);
   };
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target; // Gets the name and value from the input element
 
@@ -80,8 +86,11 @@ function useCreateProject() {
       ...formData,
       description: textArea,
     });
+
     if (!result.success) {
-      return result.error;
+      const fieldErrors = z.treeifyError(result.error) as ProjectErrors;
+      setErrorMessage(fieldErrors);
+      return;
     }
 
     // Decides create vs update - when id exists
@@ -104,6 +113,7 @@ function useCreateProject() {
     formData,
     handleOnSubmit,
     textArea,
+    errorMessage,
   };
 }
 
