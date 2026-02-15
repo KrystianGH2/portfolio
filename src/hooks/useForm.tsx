@@ -5,16 +5,7 @@ import {
   type ContactFormTypes,
 } from "@/validation/projectSchema";
 import z from "zod";
-
-type TreeError = {
-  errors: string[];
-  properties?: {
-    name?: { errors: string[] };
-    email?: { errors: string[] };
-    subject?: { errors: string[] };
-    message?: { errors: string[] };
-  };
-};
+import type { TreeError } from "@/types/types";
 
 function useForm() {
   const [messageData, setMessageData] = useState("");
