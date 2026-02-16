@@ -15,7 +15,7 @@ function Projects() {
       <section className="pt-15 gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {isLoading ? (
           <div className="col-span-full">
-            <Loading width={"40"} height={"50"} />
+            <Loading width={"40"} height={"50"} length={3} />
           </div>
         ) : (
           projects.map((item: ProjectTypes, index: number) => {
