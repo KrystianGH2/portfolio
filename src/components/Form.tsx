@@ -26,7 +26,7 @@ function Form() {
   const liveUrl = errorMessage?.properties?.liveUrl?.errors?.[0];
 
   return (
-    <Card className="w-full m-auto sm:max-w-md p-8">
+    <Card className="w-full m-auto lg:max-w-xl p-8">
       <h1 className="">{isEdit ? "Update Project" : "Create Project"}</h1>
       <form
         className="flex flex-col gap-3"
