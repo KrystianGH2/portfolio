@@ -2,9 +2,10 @@ import express from "express";
 import { connectDB } from "./db.js";
 import { Project } from "./models/project.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
-app.use(express.json());
+app.use(express.json(), cookieParser());
 
 app.use(
   cors({
@@ -13,8 +14,43 @@ app.use(
       "https://portfolio-roan-xi-45.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   }),
 );
+
+const ADMIN_COOKIE = "admin_auth";
+
+function requireAdmin(req, res, next) {
+  if (req.cookies?.[ADMIN_COOKIE === "1"]) return next();
+  return res.status(401).json({ message: "Unauthorized" });
+}
+
+app.post("/api/admin/login", (req, res) => {
+  const { password } = req.body;
+
+  if (password !== process.env.ADMIN_PASSWORD) {
+    return res.status(401).json({ message: "Invalid Password" });
+  }
+
+  res.cookies(ADMIN_COOKIE, "1", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  });
+
+  req.json({ ok: true });
+});
+
+app.post("/api/admin/logout", (req, res) => {
+  res.clearCookie(ADMIN_COOKIE);
+  res.json({ ok: true });
+});
+
+app.get("/api/admin/me", (req, res) => {
+  if (req.cookies?.[ADMIN_COOKIE] !== "1")
+    return res.status(401).json({ ok: false });
+});
 
 app.get("/api/projects", async (req, res) => {
   try {
@@ -31,7 +67,7 @@ app.get("/api/projects", async (req, res) => {
   }
 });
 
-app.post("/api/projects", async (req, res) => {
+app.post("/api/projects", requireAdmin, async (req, res) => {
   try {
     await connectDB();
     const created = await Project.create(req.body);
@@ -63,7 +99,7 @@ app.get("/api/projects/:id", async (req, res) => {
   }
 });
 
-app.put("/api/projects/:id", async (req, res) => {
+app.put("/api/projects/:id", requireAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -87,7 +123,7 @@ app.put("/api/projects/:id", async (req, res) => {
   }
 });
 
-app.delete("/api/projects/:id", async (req, res) => {
+app.delete("/api/projects/:id", requireAdmin, async (req, res) => {
   try {
     await connectDB();
 
