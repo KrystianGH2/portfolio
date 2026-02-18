@@ -5,7 +5,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 const app = express();
-app.use(express.json(), cookieParser());
+app.use(express.json());
+app.use(cookieParser());
 
 app.use(
   cors({
@@ -13,15 +14,15 @@ app.use(
       "http://localhost:5173",
       "https://portfolio-roan-xi-45.vercel.app",
     ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }),
 );
 
 const ADMIN_COOKIE = "admin_auth";
+const isProd = process.env.NODE_ENV === "production";
 
 function requireAdmin(req, res, next) {
-  if (req.cookies?.[ADMIN_COOKIE === "1"]) return next();
+  if (req.cookies?.[ADMIN_COOKIE] === "1") return next();
   return res.status(401).json({ message: "Unauthorized" });
 }
 
@@ -32,24 +33,26 @@ app.post("/api/admin/login", (req, res) => {
     return res.status(401).json({ message: "Invalid Password" });
   }
 
-  res.cookies(ADMIN_COOKIE, "1", {
+  res.cookie(ADMIN_COOKIE, "1", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax",
     maxAge: 1000 * 60 * 60 * 24 * 7,
   });
 
-  req.json({ ok: true });
+  return res.json({ ok: true });
 });
 
 app.post("/api/admin/logout", (req, res) => {
-  res.clearCookie(ADMIN_COOKIE);
-  res.json({ ok: true });
+  res.clearCookie(ADMIN_COOKIE, {
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax",
+  });
+  return res.json({ ok: true });
 });
 
-app.get("/api/admin/me", (req, res) => {
-  if (req.cookies?.[ADMIN_COOKIE] !== "1")
-    return res.status(401).json({ ok: false });
+app.get("/api/admin/me", requireAdmin, (req, res) => {
+  return res.json({ ok: true });
 });
 
 app.get("/api/projects", async (req, res) => {
