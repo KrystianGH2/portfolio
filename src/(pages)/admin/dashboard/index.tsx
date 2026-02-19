@@ -2,7 +2,7 @@ import DashboardComponent from "@/components/Dashboard";
 import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "@/services/authService";
+import { auth } from "../../../services/authService";
 function Dashboard() {
   const nav = useNavigate();
 
