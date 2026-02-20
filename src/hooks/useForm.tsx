@@ -5,10 +5,14 @@ import {
   type ContactFormTypes,
 } from "@/validation/projectSchema";
 import z from "zod";
+import type { TreeError } from "@/types/types";
 
 function useForm() {
   const [messageData, setMessageData] = useState("");
-  const [errorMessage, setErrorMessage] = useState({});
+  const [errorMessage, setErrorMessage] = useState<TreeError | null>(null);
+  const [isSending, setIsSending] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+  const [sendError, setSendError] = useState<string | null>(null);
   const [formData, setFormData] = useState<ContactFormTypes>({
     name: "",
     email: "",
@@ -19,37 +23,62 @@ function useForm() {
   const messageDataChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const data = e.target.value;
     setMessageData(data);
+    setErrorMessage(null);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setFormData((prev) => ({
       ...prev,
       message: messageData,
       [name]: value,
     }));
+    setErrorMessage(null);
+    setIsSent(false);
   };
 
   const handleOnSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const result = contactFormSchema.safeParse({
+      ...formData,
+      message: messageData,
+    });
+
+    if (!result.success) {
+      const fieldErrors = z.treeifyError(result.error) as TreeError;
+      setErrorMessage(fieldErrors);
+      return;
+    }
+
+    console.log("Valid submit:", result.data);
+
     try {
-      const result = contactFormSchema.safeParse({
-        ...formData,
-        message: messageData,
-      });
+      setIsSending(true);
 
-      if (!result.success) {
-        setErrorMessage(result.error.issues);
-        console.log("Error message", result.error.issues);
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(result.data),
+      };
+
+      const res = await fetch("https://formspree.io/f/xaqdyaod", options);
+      if (!res.ok) {
+        throw new Error("Failed to send message");
       }
 
-      console.log(result);
+      setIsSent(true);
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setMessageData("");
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        console.log("Validation Fail", error.issues);
-      }
+      setSendError(
+        error instanceof Error ? error.message : "Something Went wrong",
+      );
+    } finally {
+      setIsSending(false);
     }
   };
   return {
@@ -59,6 +88,9 @@ function useForm() {
     messageDataChange,
     handleChange,
     handleOnSubmit,
+    isSending,
+    isSent,
+    sendError,
   };
 }
 

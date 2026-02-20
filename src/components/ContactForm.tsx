@@ -12,11 +12,16 @@ function ContactForm() {
     handleChange,
     handleOnSubmit,
     errorMessage,
+    isSending,
   } = useForm();
 
-  
+  const nameErr = errorMessage?.properties?.name?.errors?.[0];
+  const emailErr = errorMessage?.properties?.email?.errors?.[0];
+  const subjectErr = errorMessage?.properties?.subject?.errors?.[0];
+  const messageErr = errorMessage?.properties?.message?.errors?.[0];
+
   return (
-    <div id="contact" className="m-auto  py-20 max-w-6xl">
+    <div id="contact" className="m-auto  pt-15 max-w-6xl">
       <form
         onSubmit={handleOnSubmit}
         className="flex flex-col border rounded-2xl p-8 justify-center items-center"
@@ -31,13 +36,8 @@ function ContactForm() {
               type="text"
               placeholder="Your name"
             />
+            {nameErr && <p className="text-red-500 text-xs">{nameErr}</p>}
           </div>
-          {errorMessage && (
-            <span
-              className="
-          text-red-500 py-2 text-xs"
-            >Mocked Error message</span>
-          )}
           <div className="flex flex-col gap-2 justify-baseline items-start">
             <label>Email</label>
             <Input
@@ -47,6 +47,7 @@ function ContactForm() {
               type="text"
               placeholder="your@email.com"
             />
+            {emailErr && <p className="text-red-500 text-xs">{emailErr}</p>}
           </div>{" "}
         </section>
         <section className="w-full max-w-xl">
@@ -59,6 +60,7 @@ function ContactForm() {
               type="text"
               placeholder="Project inquiry"
             />
+            {subjectErr && <p className="text-red-500 text-xs">{subjectErr}</p>}
           </div>
           <div className="flex flex-col gap-2 justify-baseline items-start">
             <label>Message</label>
@@ -68,11 +70,12 @@ function ContactForm() {
               value={messageData}
               placeholder="Tell me about your project..."
             />
+          {messageErr && <p className="text-red-500 text-xs">{messageErr}</p>}
           </div>{" "}
         </section>
 
-        <Button className="mt-10" type="submit">
-          Submit
+        <Button disabled={isSending} className="mt-10" type="submit">
+          {isSending ? "Sending..." : "Send Message"}
         </Button>
       </form>
     </div>
