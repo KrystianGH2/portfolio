@@ -66,3 +66,15 @@ export async function getProjectById(id: string) {
     }
   }
 }
+
+export async function deleteProject(id: string) {
+  try {
+    await fetch(`${baseUrl}/api/projects/${id}`, {
+      method: "DELETE",
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error("Failed to delete project", { cause: error });
+    }
+  }
+}
