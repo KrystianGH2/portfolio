@@ -3,9 +3,11 @@ import useProjects from "@/hooks/useProjects";
 import { Card } from "./ui/card";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
+import { useDeleteProject } from "@/hooks/useDeleteProject";
 
 function DashboardComponent() {
   const { projects, isLoading } = useProjects();
+  const { handleDelete } = useDeleteProject();
   const [selected, setSelected] = useState<string | null>(null);
 
   return (
@@ -23,18 +25,19 @@ function DashboardComponent() {
               onClick={() => setSelected(item._id)}
               className={`p-4 transition w-full relative ${
                 selected === item._id ? "border-blue-500" : "border"
-              }  my-2 `}
+              } my-2`}
             >
               <Link to={item._id}>
                 <h2>{item.title}</h2>
               </Link>
-              <span
-                className={` ${
-                  selected === item._id
-                    ? "block w-3 h-3 rounded-full bg-black "
-                    : ""
-                } absolute right-5 top-5.5 animate-pulse `}
-              ></span>
+
+              <button
+                type="button"
+                onClick={() => handleDelete(item._id)}
+                className="absolute right-5 top-4"
+              >
+                Delete
+              </button>
             </Card>
           ))
         )}
