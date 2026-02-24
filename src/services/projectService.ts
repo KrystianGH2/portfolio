@@ -22,3 +22,7 @@ export async function getProjectById(id: string) {
 export function deleteProject(id: string) {
   return auth(`/api/projects/${id}`, { method: "DELETE" });
 }
+
+export async function logout() {
+  return auth("/api/admin/logout", { method: "POST" });
+}
