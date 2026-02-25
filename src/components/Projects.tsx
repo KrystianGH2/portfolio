@@ -20,16 +20,29 @@ function Projects() {
         ) : (
           projects.map((item: ProjectTypes, index: number) => {
             return (
-              <Card
-                className="flex flex-col p-6 items-start justify-center"
-                key={index}
-              >
+              <Card key={index} className="flex flex-col h-full">
                 <img
                   className="w-full object-cover h-50"
                   src={item?.imageUrl}
                   alt={`${item.title} image`}
                 />
-                <h1>{item.title}</h1>
+
+                <div className="flex flex-col flex-1 px-6 py-4">
+                  <h1 className="font-medium tracking-wide">{item.title}</h1>
+
+                  <p className="mt-2 flex-1 text-sm">{item.description}</p>
+
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {item.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="text-xs px-2 py-1 bg-gray-200 rounded-md"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </Card>
             );
           })
