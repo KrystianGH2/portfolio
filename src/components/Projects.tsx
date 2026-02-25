@@ -22,11 +22,20 @@ function Projects() {
         ) : (
           projects.map((item: ProjectTypes, index: number) => {
             return (
-              <Card key={index} className="flex flex-col h-full relative group">
+              <Card
+                key={index}
+                className="flex flex-col h-full relative group overflow-hidden"
+              >
                 <img
-                  className="w-full object-cover h-50"
+                  className="w-full object-cover h-50 transition-transform duration-300 group-hover:scale-105"
                   src={item?.imageUrl}
                   alt={`${item.title} image`}
+                />
+
+                <div
+                  className="absolute inset-0 bg-black/10 
+               opacity-0 group-hover:opacity-100 
+               transition-opacity duration-300"
                 />
 
                 <div className="flex flex-col flex-1 px-6 py-4">
@@ -47,9 +56,9 @@ function Projects() {
                 </div>
 
                 <div
-                  className="absolute top-50 right-20 opacity-0 translate-y-2 
-                group-hover:opacity-100 group-hover:translate-y-0
-                transition-all duration-200"
+                  className="absolute inset-0 flex items-center justify-center 
+               opacity-0 group-hover:opacity-100 
+               transition-all duration-300 z-10"
                 >
                   <div className="flex gap-5">
                     <Link target="_blank" to={item.liveUrl}>
