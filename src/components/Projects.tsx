@@ -2,6 +2,8 @@ import useProjects from "@/hooks/useProjects";
 import type { ProjectTypes } from "@/validation/projectSchema";
 import { Card } from "./ui/card";
 import Loading from "./Loading";
+import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
 
 function Projects() {
   const { projects, isLoading } = useProjects();
@@ -20,7 +22,7 @@ function Projects() {
         ) : (
           projects.map((item: ProjectTypes, index: number) => {
             return (
-              <Card key={index} className="flex flex-col h-full">
+              <Card key={index} className="flex flex-col h-full relative group">
                 <img
                   className="w-full object-cover h-50"
                   src={item?.imageUrl}
@@ -41,6 +43,21 @@ function Projects() {
                         {t}
                       </span>
                     ))}
+                  </div>
+                </div>
+
+                <div
+                  className="absolute top-50 right-20 opacity-0 translate-y-2 
+                group-hover:opacity-100 group-hover:translate-y-0
+                transition-all duration-200"
+                >
+                  <div className="flex gap-5">
+                    <Link target="_blank" to={item.liveUrl}>
+                      <Button>Live Url</Button>
+                    </Link>
+                    <Link target="_blank" to={item.repoUrl}>
+                      <Button>Repo Url</Button>
+                    </Link>
                   </div>
                 </div>
               </Card>
