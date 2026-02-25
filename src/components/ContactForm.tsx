@@ -27,7 +27,7 @@ function ContactForm() {
         className="flex flex-col border rounded-2xl p-8 justify-center items-center"
       >
         <section className="w-full max-w-xl">
-          <div className="flex flex-col gap-2 justify-baseline items-start">
+          <div className="flex flex-col gap-2 justify-baseline items-start pb-2">
             <label>Title</label>
             <Input
               onChange={handleChange}
@@ -38,7 +38,7 @@ function ContactForm() {
             />
             {nameErr && <p className="text-red-500 text-xs">{nameErr}</p>}
           </div>
-          <div className="flex flex-col gap-2 justify-baseline items-start">
+          <div className="flex flex-col gap-2 justify-baseline items-start pb-2">
             <label>Email</label>
             <Input
               onChange={handleChange}
@@ -51,7 +51,7 @@ function ContactForm() {
           </div>{" "}
         </section>
         <section className="w-full max-w-xl">
-          <div className="flex flex-col gap-2 justify-baseline items-start">
+          <div className="flex flex-col gap-2 justify-baseline items-start pb-2">
             <label>Subject</label>
             <Input
               onChange={handleChange}
@@ -70,7 +70,7 @@ function ContactForm() {
               value={messageData}
               placeholder="Tell me about your project..."
             />
-          {messageErr && <p className="text-red-500 text-xs">{messageErr}</p>}
+            {messageErr && <p className="text-red-500 text-xs">{messageErr}</p>}
           </div>{" "}
         </section>
 
