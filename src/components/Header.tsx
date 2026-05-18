@@ -61,13 +61,13 @@ function Header() {
           </div>
         </section>
         <section className="relative flex  w-full max-w-md lg:max-w-lg lg:basis-1/2 justify-center">
-          <div className="absolute top-2 right-0 bg-black h-12 w-12 rounded float-header-right">
+          <div className="absolute top-2 right-0 bg-black h-14 w-14 rounded float-header-right">
             <span></span>
           </div>
           <div className="bg-black h-60 w-70 m-8 rounded float-header-middle">
             <span></span>
           </div>
-          <div className="  absolute bottom-0 left-0 bg-black h-12 w-12 rounded float-header-left">
+          <div className="  absolute bottom-0 left-0 bg-black h-14 w-14 rounded float-header-left">
             <span></span>
           </div>
         </section>
