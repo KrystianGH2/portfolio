@@ -4,8 +4,14 @@ type Message = {
   message: string;
 };
 
-function Error({ message }: Message) {
-  return <div className="border">{message}</div>;
+export function Error({ message }: Message) {
+  return (
+    <div className="mx-auto max-w-xl">
+      <div className="w-full rounded border-red-500 border-2 flex h-30 mt-40 items-center justify-center text-center">
+        <p className="text-red-500 font-semibold text-xl">{message}</p>
+      </div>
+    </div>
+  );
 }
 
 export default Error;
