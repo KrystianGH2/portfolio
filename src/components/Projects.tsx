@@ -4,9 +4,12 @@ import { Card } from "./ui/card";
 import Loading from "./Loading";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import Error from "./ui/Error";
 
 function Projects() {
-  const { projects, isLoading } = useProjects();
+  const { projects, isLoading, isError } = useProjects();
+
+  if (!projects) return <Error message={isError} />;
 
   return (
     <main id="projects" className="pt-36 m-auto w-full max-w-6xl px-6 lg:px-0">
