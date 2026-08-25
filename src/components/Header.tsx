@@ -2,6 +2,7 @@ import { navLinks } from "@/constants/constants";
 import { useState } from "react";
 import { HashLink } from "react-router-hash-link";
 import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
 function Header() {
   const [availability, setAvailability] = useState(true);
   const links = navLinks.map((item, index) => {
@@ -61,14 +62,21 @@ function Header() {
           </div>
         </section>
         <section className="relative flex  w-full max-w-md lg:max-w-lg lg:basis-1/2 justify-center">
-          <div className="absolute top-2 right-0 bg-black h-14 w-14 rounded float-header-right">
-            <span></span>
+          <div className="absolute top-2 right-0  h-14 w-14 rounded float-header-right">
+            <Link target="blank" to={"https://github.com/KrystianGH2"}>
+              <img src={`/public/images/github.webp`} alt="" />
+            </Link>
           </div>
           <div className="bg-black h-60 w-70 m-8 rounded float-header-middle">
             <span></span>
           </div>
-          <div className="  absolute bottom-0 left-0 bg-black h-14 w-14 rounded float-header-left">
-            <span></span>
+          <div className="  absolute bottom-0 left-0 h-14 w-14 rounded float-header-left">
+            <Link
+              target="blank"
+              to={"https://www.linkedin.com/in/krystian-cruz/"}
+            >
+              <img src={`/public/images/linkedin.webp`} alt="" />
+            </Link>
           </div>
         </section>
       </header>
