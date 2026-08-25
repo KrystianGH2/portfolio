@@ -9,7 +9,8 @@ import Error from "./ui/Error";
 function Projects() {
   const { projects, isLoading, isError } = useProjects();
 
-  if (!projects) return <Error message={isError} />;
+  if (!projects)
+    return <Error message={isError || "Failed to fetch projects."} />;
 
   return (
     <main id="projects" className="pt-36 m-auto w-full max-w-6xl px-6 lg:px-0">
