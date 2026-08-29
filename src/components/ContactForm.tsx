@@ -30,6 +30,7 @@ function ContactForm() {
           <div className="flex flex-col gap-2 justify-baseline items-start pb-2">
             <label>Title</label>
             <Input
+              className={nameErr ? `border-red-500` : ""}
               onChange={handleChange}
               name="name"
               value={formData.name}
@@ -41,6 +42,7 @@ function ContactForm() {
           <div className="flex flex-col gap-2 justify-baseline items-start pb-2">
             <label>Email</label>
             <Input
+              className={emailErr ? `border-red-500` : ""}
               onChange={handleChange}
               name="email"
               value={formData.email}
@@ -54,6 +56,7 @@ function ContactForm() {
           <div className="flex flex-col gap-2 justify-baseline items-start pb-2">
             <label>Subject</label>
             <Input
+              className={subjectErr ? `border-red-500` : ""}
               onChange={handleChange}
               name="subject"
               value={formData.subject}
@@ -65,6 +68,7 @@ function ContactForm() {
           <div className="flex flex-col gap-2 justify-baseline items-start">
             <label>Message</label>
             <Textarea
+              className={messageErr ? `border-red-500` : ""}
               onChange={messageDataChange}
               name="message"
               value={messageData}
